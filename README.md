@@ -1,6 +1,6 @@
 # Deploy IaC in AWS via Gitlab pipelines using OIDC
 
-Simple repository created to deploy infrastructure using Terraform into AWS cloud by Gitlab pipeline using OpenID Connect. Whole integration between AWS and GitHub was configured using [Configure OpenID Connect in AWS to retrieve temporary credentials](https://docs.gitlab.com/ee/ci/cloud_services/aws/) by:
+Simple repository created to deploy infrastructure using Terraform into AWS cloud by Gitlab pipeline using OpenID Connect. Whole integration between AWS and Gitlab was configured using [Configure OpenID Connect in AWS to retrieve temporary credentials](https://docs.gitlab.com/ee/ci/cloud_services/aws/) by:
 1. adding identity provider in AWS
 1. configuring the role and trust policy (code for [IAM role and policy configuration is available in oidc subfolder](oidc)):
     ```
@@ -10,7 +10,7 @@ Simple repository created to deploy infrastructure using Terraform into AWS clou
             {
                 "Effect": "Allow",
                 "Principal": {
-                    "Federated": "${var.github_provider_arn}"
+                    "Federated": "${var.gitlab_provider_arn}"
                 },
                 "Action": "sts:AssumeRoleWithWebIdentity",
                 "Condition": {
