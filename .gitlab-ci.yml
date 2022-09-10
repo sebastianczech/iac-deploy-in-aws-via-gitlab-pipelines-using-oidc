@@ -1,6 +1,7 @@
 include:
   - local: templates/Terraform.gitlab-ci.yml
   - local: templates/SAST-IaC.gitlab-ci.yml
+  - local: templates/AWS-OIDC.gitlab-ci.yml
 
 stages:
   - validate
