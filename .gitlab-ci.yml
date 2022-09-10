@@ -1,6 +1,6 @@
 include:
-  - template: templates/Terraform.gitlab-ci.yml
-  - template: templates/SAST-IaC.gitlab-ci.yml
+  - local: templates/Terraform.gitlab-ci.yml
+  - local: templates/SAST-IaC.gitlab-ci.yml
 
 stages:
   - validate
