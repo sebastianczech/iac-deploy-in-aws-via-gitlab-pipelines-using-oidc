@@ -3,6 +3,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "github_provider_arn" {
+variable "gitlab_provider_arn" {
   type = string
 }

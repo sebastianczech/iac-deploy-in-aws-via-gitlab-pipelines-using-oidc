@@ -1,5 +1,5 @@
-resource "aws_iam_role" "github_aws_oidc_role" {
-  name = "GitHubActionsAwsOIDCRole"
+resource "aws_iam_role" "gitlab_aws_oidc_role" {
+  name = "GitlabPipelineAwsOIDCRole"
 
   assume_role_policy = <<EOF
 {
@@ -8,14 +8,13 @@ resource "aws_iam_role" "github_aws_oidc_role" {
 		{
 			"Effect": "Allow",
 			"Principal": {
-				"Federated": "${var.github_provider_arn}"
+				"Federated": "${var.gitlab_provider_arn}"
 			},
 			"Action": "sts:AssumeRoleWithWebIdentity",
 			"Condition": {
-				"StringLike": {
-					"token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-          "token.actions.githubusercontent.com:sub": "repo:evcode-sebastian-czech/iac-deploy-in-aws-via-github-actions-using-oidc:*"
-				}
+				"StringEquals": {
+            "gitlab.com:sub": "project_path:sebastianczech/deploy-iac-in-aws-via-gitlab-pipelines-using-oidc:ref_type:branch:ref:main"
+        }
 			}
 		}
 	]
@@ -23,9 +22,9 @@ resource "aws_iam_role" "github_aws_oidc_role" {
 EOF
 }
 
-resource "aws_iam_policy" "github_aws_oidc_policy" {
-  name        = "GitHubActionsAwsOIDCPolicy"
-  description = "Policy allowing to create DynamoDB table by GitHub Actions"
+resource "aws_iam_policy" "gitlab_aws_oidc_policy" {
+  name        = "GitlabPipelineAwsOIDCPolicy"
+  description = "Policy allowing to create DynamoDB table by Gitlab pipeline"
 
   policy = <<EOF
 {
@@ -43,7 +42,7 @@ resource "aws_iam_policy" "github_aws_oidc_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "github_aws_oidc_policy_attachment" {
-  role       = aws_iam_role.github_aws_oidc_role.name
-  policy_arn = aws_iam_policy.github_aws_oidc_policy.arn
+resource "aws_iam_role_policy_attachment" "gitlab_aws_oidc_policy_attachment" {
+  role       = aws_iam_role.gitlab_aws_oidc_role.name
+  policy_arn = aws_iam_policy.gitlab_aws_oidc_policy.arn
 }
