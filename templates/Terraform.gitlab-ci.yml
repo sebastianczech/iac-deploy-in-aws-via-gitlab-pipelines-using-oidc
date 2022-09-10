@@ -10,10 +10,7 @@
 # which is the lib/gitlab/ci/templates/Terraform.latest.gitlab-ci.yml
 
 image:
-  # name: "$CI_TEMPLATE_REGISTRY_HOST/gitlab-org/terraform-images/stable:latest"
-  name: amazon/aws-cli:latest
-  entrypoint:
-    - '/usr/bin/env'
+  name: "$CI_TEMPLATE_REGISTRY_HOST/gitlab-org/terraform-images/stable:latest"
 
 variables:
   TF_ROOT: ${CI_PROJECT_DIR}  # The relative path to the root directory of the Terraform project
