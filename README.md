@@ -25,15 +25,19 @@ Simple repository created to deploy infrastructure using Terraform into AWS clou
 2. updating your Gitlab pipeline by retrieving temporary credentials:
     ```
     assume role:
-    script:
-        - >
-        export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s"
-        $(aws sts assume-role-with-web-identity
-        --role-arn ${ROLE_ARN}
-        --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
-        --web-identity-token $CI_JOB_JWT_V2
-        --duration-seconds 3600
-        --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
-        --output text))
-        - aws sts get-caller-identity
+        script:
+            - >
+            STS=($(aws sts assume-role-with-web-identity
+            --role-arn ${ROLE_ARN}
+            --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
+            --web-identity-token $CI_JOB_JWT_V2
+            --duration-seconds 3600
+            --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
+            --output text))
+    - export AWS_ACCESS_KEY_ID="${STS[0]}"
+            - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
+            - export AWS_SESSION_TOKEN="${STS[2]}"
+            - aws sts get-caller-identity
+            - aws s3 ls
+            - aws ec2 describe-instances
     ```
