@@ -14,6 +14,6 @@ variable "gitlab_aud" {
 }
 
 variable "gitlab_thumbprint" {
-  type = string
+  type    = string
   default = "b3dd7606d2b5a8b4a13771dbecc9ee1cecafa38a"
 }
