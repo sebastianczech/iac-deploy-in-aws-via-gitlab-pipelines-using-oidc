@@ -41,6 +41,8 @@ apply:
     - terraform apply
   resource_group: ${TF_STATE_NAME}
   environment: production
+  dependencies:
+    - plan
 
 destroy:
   stage: cleanup
@@ -49,3 +51,6 @@ destroy:
     - terraform destroy
   resource_group: ${TF_STATE_NAME}
   environment: production
+  dependencies:
+    - plan
+    - apply
