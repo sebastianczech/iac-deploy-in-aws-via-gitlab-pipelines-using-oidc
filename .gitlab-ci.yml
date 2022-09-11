@@ -3,7 +3,7 @@ include:
   - local: templates/AWS-OIDC.gitlab-ci.yml
 
 image:
-  name: "sebaczech/gitlab-runner-terraform-aws-cli"
+  name: "sebaczech/gitlab-runner-terraform-aws-cli:1.0"
 
 stages:
   - validate
