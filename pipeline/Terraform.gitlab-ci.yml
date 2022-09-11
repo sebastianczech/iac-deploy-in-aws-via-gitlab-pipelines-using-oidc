@@ -11,8 +11,6 @@ fmt:
   stage: check
   script:
     - cd "${TF_ROOT}"
-    - pwd
-    - ls -al
     - terraform fmt
   allow_failure: true
 
@@ -20,8 +18,6 @@ validate:
   stage: test
   script:
     - cd "${TF_ROOT}"
-    - pwd
-    - ls -al
     - terraform init
     - terraform validate
 
@@ -29,19 +25,6 @@ plan:
   stage: build
   script:
     - cd "${TF_ROOT}"
-    - pwd
-    - ls -al
-    - >
-      STS=($(aws sts assume-role-with-web-identity
-      --role-arn ${ROLE_ARN}
-      --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
-      --web-identity-token $CI_JOB_JWT_V2
-      --duration-seconds 3600
-      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
-      --output text))
-    - export AWS_ACCESS_KEY_ID="${STS[0]}"
-    - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
-    - export AWS_SESSION_TOKEN="${STS[2]}"
     - terraform plan -out=plan
   resource_group: ${TF_STATE_NAME}
   artifacts:
@@ -54,19 +37,6 @@ apply:
   stage: deploy
   script:
     - cd "${TF_ROOT}"
-    - pwd
-    - ls -al
-    - >
-      STS=($(aws sts assume-role-with-web-identity
-      --role-arn ${ROLE_ARN}
-      --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
-      --web-identity-token $CI_JOB_JWT_V2
-      --duration-seconds 3600
-      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
-      --output text))
-    - export AWS_ACCESS_KEY_ID="${STS[0]}"
-    - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
-    - export AWS_SESSION_TOKEN="${STS[2]}"
     - terraform apply
   resource_group: ${TF_STATE_NAME}
   environment: production
@@ -77,19 +47,6 @@ destroy:
   stage: cleanup
   script:
     - cd "${TF_ROOT}"
-    - pwd
-    - ls -al
-    - >
-      STS=($(aws sts assume-role-with-web-identity
-      --role-arn ${ROLE_ARN}
-      --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
-      --web-identity-token $CI_JOB_JWT_V2
-      --duration-seconds 3600
-      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
-      --output text))
-    - export AWS_ACCESS_KEY_ID="${STS[0]}"
-    - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
-    - export AWS_SESSION_TOKEN="${STS[2]}"
     - terraform destroy
   resource_group: ${TF_STATE_NAME}
   environment: production
