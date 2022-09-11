@@ -41,8 +41,6 @@ plan:
   artifacts:
     paths:
       - ${TF_ROOT}/plan
-    reports:
-      terraform: ${TF_ROOT}/plan.json
 
 apply:
   stage: deploy
