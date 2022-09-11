@@ -42,12 +42,11 @@ plan:
     - export AWS_ACCESS_KEY_ID="${STS[0]}"
     - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
     - export AWS_SESSION_TOKEN="${STS[2]}"
-    - terraform plan
-    - terraform plan-json
+    - terraform plan -out=plan
   resource_group: ${TF_STATE_NAME}
   artifacts:
     paths:
-      - ${TF_ROOT}/plan.cache
+      - ${TF_ROOT}/plan
     reports:
       terraform: ${TF_ROOT}/plan.json
 
