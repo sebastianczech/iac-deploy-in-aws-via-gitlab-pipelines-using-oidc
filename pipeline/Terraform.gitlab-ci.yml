@@ -8,16 +8,20 @@ cache:
     - ${TF_ROOT}
 
 fmt:
-  stage: validate
+  stage: check
   script:
     - cd "${TF_ROOT}"
+    - pwd
+    - ls -al
     - terraform fmt
   allow_failure: true
 
 validate:
-  stage: validate
+  stage: test
   script:
     - cd "${TF_ROOT}"
+    - pwd
+    - ls -al
     - terraform init
     - terraform validate
 
@@ -25,6 +29,8 @@ plan:
   stage: build
   script:
     - cd "${TF_ROOT}"
+    - pwd
+    - ls -al
     - terraform plan
     - terraform plan-json
   resource_group: ${TF_STATE_NAME}
@@ -38,6 +44,8 @@ apply:
   stage: deploy
   script:
     - cd "${TF_ROOT}"
+    - pwd
+    - ls -al
     - terraform apply
   resource_group: ${TF_STATE_NAME}
   environment: production
@@ -48,6 +56,8 @@ destroy:
   stage: cleanup
   script:
     - cd "${TF_ROOT}"
+    - pwd
+    - ls -al
     - terraform destroy
   resource_group: ${TF_STATE_NAME}
   environment: production

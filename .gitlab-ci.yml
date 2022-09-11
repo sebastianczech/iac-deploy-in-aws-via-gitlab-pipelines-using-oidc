@@ -1,12 +1,12 @@
 include:
-  - local: templates/Terraform.gitlab-ci.yml
-  - local: templates/AWS-OIDC.gitlab-ci.yml
+  - local: pipeline/Terraform.gitlab-ci.yml
+  - local: pipeline/AWS-OIDC.gitlab-ci.yml
 
 image:
   name: "sebaczech/gitlab-runner-terraform-aws-cli:1.0"
 
 stages:
-  - validate
+  - check
   - test
   - build
   - deploy
