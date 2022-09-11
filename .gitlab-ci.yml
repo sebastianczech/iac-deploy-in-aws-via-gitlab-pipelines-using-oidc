@@ -15,7 +15,9 @@ stages:
 deploy:
   dependencies:
     - build
+  environment: production
 
 cleanup:
   dependencies:
     - deploy
+  environment: production
