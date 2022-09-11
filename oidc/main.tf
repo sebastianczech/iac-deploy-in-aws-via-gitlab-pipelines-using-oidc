@@ -1,3 +1,13 @@
+data "tls_certificate" "gitlab" {
+  url = var.gitlab_url
+}
+
+resource "aws_iam_openid_connect_provider" "gitlab_provider" {
+  url             = var.gitlab_url
+  client_id_list  = [var.gitlab_aud]
+  thumbprint_list = ["${data.tls_certificate.gitlab.certificates.0.sha1_fingerprint}"]
+}
+
 resource "aws_iam_role" "gitlab_aws_oidc_role" {
   name = "GitlabPipelineAwsOIDCRole"
 
@@ -8,7 +18,7 @@ resource "aws_iam_role" "gitlab_aws_oidc_role" {
 		{
 			"Effect": "Allow",
 			"Principal": {
-				"Federated": "${var.gitlab_provider_arn}"
+				"Federated": "${aws_iam_openid_connect_provider.gitlab_provider.arn}"
 			},
 			"Action": "sts:AssumeRoleWithWebIdentity",
 			"Condition": {
