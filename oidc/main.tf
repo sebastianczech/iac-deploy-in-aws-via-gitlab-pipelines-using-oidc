@@ -2,14 +2,10 @@ data "tls_certificate" "gitlab" {
   url = var.gitlab_url
 }
 
-# output tls {
-#   value = data.tls_certificate.gitlab
-# }
-
 resource "aws_iam_openid_connect_provider" "gitlab_provider" {
   url             = var.gitlab_url
   client_id_list  = [var.gitlab_aud]
-  thumbprint_list = [for item in data.tls_certificate.gitlab.certificates: item.sha1_fingerprint]
+  thumbprint_list = concat([for item in data.tls_certificate.gitlab.certificates: item.sha1_fingerprint], [var.gitlab_thumbprint])
 }
 
 resource "aws_iam_role" "gitlab_aws_oidc_role" {
