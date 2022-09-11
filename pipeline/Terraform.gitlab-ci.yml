@@ -5,7 +5,7 @@ variables:
 cache:
   key: "${TF_ROOT}"
   paths:
-    - ${TF_ROOT}
+    - ${TF_ROOT}/.terraform
 
 fmt:
   stage: check
