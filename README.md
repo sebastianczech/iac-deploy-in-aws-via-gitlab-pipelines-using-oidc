@@ -22,7 +22,16 @@ Simple repository created to deploy infrastructure using Terraform into AWS clou
         ]
     }
     ```
-2. updating your Gitlab pipeline by retrieving temporary credentials:
+1. preparing dedicated image used by pipeline in Gitlab:
+   ```
+    cd images
+    docker build -t gitlab-runner-terraform-aws-cli .
+    docker run --name gitlab_bash --rm -i -t gitlab-runner-terraform-aws-cli sh
+    docker tag gitlab-runner-terraform-aws-cli:latest gitlab-runner-terraform-aws-cli:1.0
+    docker tag gitlab-runner-terraform-aws-cli:1.0 sebaczech/gitlab-runner-terraform-aws-cli:1.0
+    docker push sebaczech/gitlab-runner-terraform-aws-cli:1.0
+    ```
+1. updating your Gitlab pipeline by retrieving temporary credentials:
     ```
     assume role:
     script:
