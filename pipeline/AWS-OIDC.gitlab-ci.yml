@@ -12,5 +12,6 @@ assume role:
     - export AWS_ACCESS_KEY_ID="${STS[0]}"
     - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
     - export AWS_SESSION_TOKEN="${STS[2]}"
+    - export AWS_DEFAULT_REGION=us-east-1
     - aws sts get-caller-identity
     - aws dynamodb list-tables
