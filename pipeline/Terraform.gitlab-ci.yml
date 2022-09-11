@@ -25,6 +25,7 @@ plan:
   stage: build
   script:
     - cd "${TF_ROOT}"
+    - . auth_aws.sh
     - terraform plan -out=plan
   resource_group: ${TF_STATE_NAME}
   artifacts:
@@ -37,6 +38,7 @@ apply:
   stage: deploy
   script:
     - cd "${TF_ROOT}"
+    - . auth_aws.sh
     - terraform apply
   resource_group: ${TF_STATE_NAME}
   environment: production
@@ -47,6 +49,7 @@ destroy:
   stage: cleanup
   script:
     - cd "${TF_ROOT}"
+    - . auth_aws.sh
     - terraform destroy
   resource_group: ${TF_STATE_NAME}
   environment: production
