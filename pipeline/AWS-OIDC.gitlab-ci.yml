@@ -13,3 +13,4 @@ assume role:
     - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
     - export AWS_SESSION_TOKEN="${STS[2]}"
     - aws sts get-caller-identity
+    - aws dynamodb list-tables

@@ -12,4 +12,9 @@ terraform {
 provider "aws" {
   alias  = "cloud"
   region = var.region
+  assume_role {
+    duration_seconds = 3600
+    session_name = "gitlab-aws-session"
+    role_arn = "arn:aws:iam::884522662008:role/GitlabPipelineAwsOIDCRole"
+  }
 }
