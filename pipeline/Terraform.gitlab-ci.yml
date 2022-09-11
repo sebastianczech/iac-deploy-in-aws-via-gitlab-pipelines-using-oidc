@@ -57,7 +57,7 @@ apply:
     - export AWS_ACCESS_KEY_ID="${STS[0]}"
     - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
     - export AWS_SESSION_TOKEN="${STS[2]}"
-    - terraform apply
+    - terraform apply -auto-approve
   resource_group: ${TF_STATE_NAME}
   environment: production
   dependencies:
@@ -78,7 +78,7 @@ destroy:
     - export AWS_ACCESS_KEY_ID="${STS[0]}"
     - export AWS_SECRET_ACCESS_KEY="${STS[1]}"
     - export AWS_SESSION_TOKEN="${STS[2]}"
-    - terraform destroy
+    - terraform destroy -auto-approve
   resource_group: ${TF_STATE_NAME}
   environment: production
   dependencies:
